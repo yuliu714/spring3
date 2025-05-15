@@ -1,0 +1,40 @@
+<meta charset="utf-8">
+这是整个网站的首页
+<title>主页</title>
+<link rel="stylesheet" type="text/css"  href="css/all.css">
+<body>
+<p><a href="uploadImg/index.html" target="_self">提交图片</a></p>
+<p><a href="uploadFile/index.html" target="_self">提交文件</a></p>
+<p><a href="show/show1.html" target="_blank">特效页面1</a>&nbsp&nbsp&nbsp<a href="show/show2.html" target="_blank">特效页面2</a></p>
+
+<h4 class="text-xl mb-4">NLP</h4>
+<table border="1">
+    <tr>
+        <th><a href="/stopword.txt" download="stopword.txt" >     stopword.txt   </a></th>
+        <th><a href="/text1.txt" download="text1.txt" >   text1.txt   </a></th>
+        <th><a href="/text2.txt" download="text2.txt">    text2.txt  </a></th>
+        <th><a href="/text3.txt" download="text3.txt">   text3.txt  </a></th>
+        <th><a href="/shop.rar" download="shop.rar">   书店网站代码 </a></th>
+        <th><a href="/龙族3.txt" download="龙族3.txt">   龙族3.txt </a></th>
+    </tr>
+</table>
+<a href="/download/download1.html" >NLP代码:</a>
+
+<h4 >Web</h4>
+<table border="1">
+    <tr>
+        <th><a href="src/mysql-connector-j-9.1.0.jar" download="mysql-connector-j-9.1.0.jar" >     mysql-connector-j-9.1.0.jar  </a></th>
+    </tr>
+</table>
+
+<p><a href="/download/download2.html" >   连接数据库示例文件：   </a></p>
+
+<p><a href="https://www.jetbrains.com.cn/idea/download/?section=windows"  >  idea编译器的地址 </a></p>
+<p><a href="https://blog.csdn.net/2301_76781059/article/details/142597347"  >社区版 idea 搭建 Javaweb 项目，(专业版和社区班的流程差不多)</a></p>
+<form class="uploadForm" method="post" action="/uploadFile/file" enctype="multipart/form-data">
+    上传文件：<input type="file" name="file" accept="*" />
+    <button type="submit">上传</button>
+</form>
+</body>
+
+

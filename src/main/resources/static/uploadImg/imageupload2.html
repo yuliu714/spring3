@@ -1,0 +1,96 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+<a href="/">返回首页</a>
+<!-- 作业上传 -->
+<form class="uploadForm" method="post" action="/uploadFile/image" enctype="multipart/form-data">
+    第三次作业：<input type="file" name="file" accept="image/*" />
+    <input type="text" name="imgName" value="第三次作业" hidden />
+    <button type="submit">上传</button>
+</form>
+
+<form class="uploadForm" method="post" action="/uploadFile/image" enctype="multipart/form-data">
+    第四次作业：<input type="file" name="file" accept="image/*" />
+    <input type="text" name="imgName" value="第四次作业" hidden />
+    <button type="submit">上传</button>
+</form>
+
+
+
+<script>
+    document.querySelectorAll('uploadForm').onsubmit = function(e) {
+        const fileInput=document.getElementById('fileInput');
+        if(!fileInput.files || fileInput.files.length === 0){ //===严格比较
+            alert('请选择图片');
+            e.preventDefault();//阻止表单提交
+        }
+    }
+</script>
+
+
+<div id="img1">
+    <table border="1">
+        <thead>
+        <th>名称</th>
+            <th>图片</th>
+        </thead>
+        <tbody>
+            <tr  v-for="(image, index) in images" :key="index">
+                <th>    {{ image.name }}        </th>
+                <td>     <img :src="image.path" alt="Image"  width="600" height="600"/>       </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    img {
+        max-width: 600px;  /* 限制最大宽度 */
+        max-height: 600px; /* 限制最大高度 */
+        width: auto;
+        height: auto;
+        object-fit: contain; /* 保持原图比例缩放，避免拉伸 */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 4px;
+    }
+    th,td{
+        max-width: 200px;  /* 限制最大宽度 */
+    }
+
+</style>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    new Vue({
+        el: '#img1',
+        data: {
+            images: []  // 存储图片路径和名称
+        },
+        mounted() {
+            // 页面加载后，调用一次
+            this.fetchImages();
+        },
+        methods: {
+            // 请求后端获取图片列表
+            fetchImages() {
+                axios.get('/upload/list_stu')  // 你的后端接口地址
+                    .then(response => {
+                        // 处理返回的图片路径列表
+                        this.images = response.data.map(path => ({
+                            path: path,  // 图片的绝对路径
+                            name:  decodeURIComponent(path.split('/').pop())  // 获取图片的文件名
+                        }));
+                    })
+                    .catch(error => {
+                        console.error("获取图片列表失败:", error);
+                    });
+            }
+        }
+    });
+</script>

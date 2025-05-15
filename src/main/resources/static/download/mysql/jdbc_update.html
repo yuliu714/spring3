@@ -1,0 +1,38 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+
+<pre>
+    &lt;%@ page    pageEncoding=&quot;UTF-8&quot; import=&quot;java.sql.*,java.util.*,org7.Stu&quot;  %&gt;
+改，在数据库更新数据&lt;br&gt;
+&lt;form id=&quot;myform&quot; method=&quot;post&quot; action=&quot;update.jsp&quot;&gt;
+	根据id:&lt;input type=&quot;text&quot; name=&quot;id&quot; value=&quot;&quot;  required&gt;&lt;br&gt;
+	改变name:&lt;input type=&quot;text&quot; name=&quot;name&quot; value=&quot;&quot;  required&gt;&lt;br&gt;
+	改变password:&lt;input type=&quot;text&quot; name=&quot;password&quot; value=&quot;&quot;  required&gt;&lt;br&gt;
+	改变className:&lt;input type=&quot;text&quot; name=&quot;className&quot; value=&quot;&quot;  required&gt;&lt;br&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+
+&lt;br&gt;插入结果：&lt;br&gt;
+&lt;jsp:useBean id=&quot;cbase&quot; class=&quot;org7.Cbase&quot; scope=&quot;session&quot;/&gt;
+
+&lt;%
+    request.setCharacterEncoding(&quot;UTF-8&quot;);//设置中文编码
+
+    Stu stu = new Stu();//创建一个对象
+
+    if (request.getParameter(&quot;id&quot;) != null &amp;&amp; !request.getParameter(&quot;id&quot;).isEmpty()) {//判断是否为空
+        stu.id = Integer.parseInt(request.getParameter(&quot;id&quot;));//赋值
+        stu.name = request.getParameter(&quot;name&quot;);
+        stu.password = request.getParameter(&quot;password&quot;);
+        stu.className = request.getParameter(&quot;className&quot;);
+
+        boolean condition = cbase.update(stu);//调用刚刚写的函数
+        if (condition) {
+            out.println(&quot;插入成功&quot;);
+        } else {
+            out.println(&quot;插入失败&quot;);
+        }
+    }
+ %&gt;
+
+</pre>

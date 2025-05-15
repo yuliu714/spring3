@@ -1,0 +1,18 @@
+body {
+    color: #fcfce8;
+    background-image: url("../img/2_min.png");
+    background-size: cover;
+    zoom: 1.5;
+}
+
+/* 默认的超链接样式 */
+a {
+    color: #b1f174;      /* 设置链接颜色为蓝色 */
+    text-decoration: none;  /* 去掉下划线 */
+}
+
+/* 鼠标悬停在链接上的样式 */
+a:hover {
+    color: indianred    ;      /* 设置鼠标悬停时链接颜色为红色 */
+    text-decoration: underline;  /* 鼠标悬停时为链接添加下划线 */
+}

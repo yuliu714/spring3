@@ -1,0 +1,23 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+
+
+<form class="uploadForm" method="post" action="/upload/file" enctype="multipart/form-data">
+    上传文件：<input type="file" name="file"  accept="*" />
+    <button type="submit">上传</button>
+</form>
+
+<form class="uploadTxt" method="post" action="/upload/text">
+    上传多行文本：<textarea name="multilineText" rows="20" cols="70" placeholder="请输入多行文本..."></textarea>
+    <button type="submit">上传</button>
+</form>
+<!-- 显示消息 -->
+<div id="message" style="color: #fd7f7f"></div>
+
+
+<script>
+    // 解析 URL 参数并显示消息
+    const searchParams = new URLSearchParams(window.location.search);
+    const message = searchParams.get('message') || '';
+    document.getElementById('message').textContent = message;
+</script>

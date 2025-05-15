@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户输入名字</title>
+    <link rel="stylesheet" href="../css/all.css">
+</head>
+<body>
+<a href="/">返回首页</a>
+<h1>请输入您的名字</h1>
+
+<!-- 错误信息 -->
+<div id="error-message" v-if="errorMessage" style="color: red; font-weight: bold;">
+    {{ errorMessage }}
+</div>
+
+<form action="/submitName" method="POST">
+
+    名字： <input type="text" id="name" name="name" required value="默认"><br>
+    <input type="text"  name="className"  value="23cs6" hidden>
+    <button type="submit">提交</button>
+
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    // 在 DOM 完全加载之后，初始化 Vue 实例
+    document.addEventListener('DOMContentLoaded', function() {
+        new Vue({
+            el: '#error-message',  // 绑定到错误信息的 div 上
+            data: {
+                errorMessage: '',  // 存储错误信息
+            },
+            created() {
+                // 页面加载时检查 URL 中是否有错误参数
+                const urlParams = new URLSearchParams(window.location.search);
+                const error = urlParams.get('error');
+                if (error) {
+                    this.errorMessage = error;  // 如果有错误信息，则显示
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

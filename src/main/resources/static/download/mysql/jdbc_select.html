@@ -1,0 +1,33 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+
+<pre>
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+
+&lt;%@ page pageEncoding=&quot;UTF-8&quot; import=&quot;java.sql.*,java.util.*,org7.Stu&quot;  %&gt;
+查询数据库&lt;br&gt;
+&lt;form id=&quot;myform&quot; method=&quot;post&quot; action=&quot;查.jsp&quot;&gt;
+    输入id:&lt;input type=&quot;text&quot; name=&quot;id&quot; value=&quot;&quot; required&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+
+查询结果：&lt;br&gt;
+&lt;jsp:useBean id=&quot;cbase&quot; class=&quot;org7.Cbase&quot; scope=&quot;session&quot;/&gt;
+
+&lt;%
+    request.setCharacterEncoding(&quot;UTF-8&quot;);//设置中文编码
+
+    Stu stu = new Stu();//创建一个对象
+
+    String id = request.getParameter(&quot;id&quot;); // 获取表格提交的数据
+    if (id != null &amp;&amp; !id.isEmpty()) {//判断是否为空
+        int id1 = Integer.parseInt(id);//String转int，因为后面函数需要int类型
+
+        stu = cbase.getById(id1);//调用刚刚写的函数
+        out.println(stu.id + &quot;&lt;br&gt;&quot;);//out.println()输出
+        out.println(stu.name + &quot;&lt;br&gt;&quot;);
+        out.println(stu.password + &quot;&lt;br&gt;&quot;);
+        out.println(stu.className + &quot;&lt;br&gt;&quot;);
+    }
+%&gt;
+&lt;/pre&gt;

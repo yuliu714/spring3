@@ -1,0 +1,79 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../css/all.css">
+<!-- 注册表单 -->
+<form id="regForm" @submit.prevent="submitForm">
+    <a href="/">返回首页</a>
+    <h1>注册页面</h1>
+    名字：<input type="text" v-model="name" name="name"/><br>
+    密码：<input type="password" v-model="password" name="password"/><br>
+    确认密码：<input type="password" v-model="confirmPassword" name="confirmPassword"/><br>
+    选择你的班级：<select name="className" id="select" v-model="className">
+        <option value="23cs5">23计算机5班</option>
+        <option value="23cs6">23计算机6班</option>
+        <option value="23cs7">23计算机7班</option>
+        <option value="23cs8">23计算机8班</option>
+        <option value="23art1">23人工1班</option>
+        <option value="23art2">23人工2班</option>
+    </select>
+    <button type="submit">注册</button>
+
+    <!-- 错误信息 -->
+    <div id="error-message" v-if="errorMessage" style="color: red; font-weight: bold;">
+        {{ errorMessage }}
+    </div>
+    <a href="index.html" target="_parent" >返回登录界面</a>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    // 在 DOM 完全加载之后，初始化 Vue 实例
+    document.addEventListener('DOMContentLoaded', function () {
+        new Vue({
+            el: '#regForm',  // Vue 实例绑定到整个注册表单上
+            data: {
+                name: '',            // 存储用户名
+                password: '',        // 存储密码
+                confirmPassword: '', // 存储确认密码
+                errorMessage: '',    // 存储错误信息
+                className: '',       // 存储班级信息
+            },
+            methods: {
+                // 验证表单并提交
+                submitForm() {
+                    // 检查密码和确认密码是否一致
+                    if (this.password !== this.confirmPassword) {
+                        this.errorMessage = "密码和确认密码不一致！";
+                        return;
+                    }
+                    if (!this.className || !this.name || !this.password || !this.confirmPassword)  {
+                        this.errorMessage = "请选择班级！、请输入名字、请输入密码、请输入确认密码！";
+                        return;
+                    }
+
+                    // 使用 fetch 提交表单数据
+                    const formData = new FormData();
+                    formData.append('name', this.name);
+                    formData.append('password', this.password);
+                    formData.append('confirmPassword', this.confirmPassword);
+                    formData.append('className', this.className);
+
+                    fetch('/regedit/regedit', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.text())  // 解析返回的文本
+                        .then(data => {
+                            if (data === "注册成功") {
+                                this.errorMessage = "注册成功！";
+                            } else {
+                                this.errorMessage = data;  // 显示后端返回的错误信息
+                            }
+                        })
+                        .catch(error => {
+                            this.errorMessage = '注册失败，请稍后重试';
+                        });
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,121 @@
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/all.css">
+
+<pre>
+    这是一个Java类，用于连接数据库并执行查询操作。
+    类名：Cbase
+    包名：org7
+package org7;
+
+import java.sql.*;
+import org7.Stu;
+
+public class Cbase {
+    static Connection conn;//因为很多个地方都用Connnection连接对象，所以定义成静态的
+
+    public static void main(String[] args) throws SQLException {//main函数
+        Cbase cbase = new Cbase();//连接数据库
+        cbase.getById(2);  //通过cbase对象调用getById方法
+    }
+
+    //3.1根据id查询数据
+    public Stu getById(int id) throws SQLException {
+        PreparedStatement pstmt = null;//创建pred执行对象
+        String sql = "select * from students where id=?";//sql语句
+        pstmt = conn.prepareStatement(sql);//为pred对象赋值
+        pstmt.setInt (1, id);//注入pred对象的第一个参数
+
+        ResultSet rs = pstmt.executeQuery();//执行sql语句
+        Stu stu = new Stu();//创建Stu对象
+        if(rs.next()){//解析查询结果
+           stu.id=rs.getInt("id");
+           stu.name=rs.getString("name");
+           stu.password=rs.getString("password");
+           stu.className=rs.getString("className");
+        }
+        return stu;
+    }
+
+    //3.2往数据库插入数据
+    public boolean insert(Stu stu) throws SQLException {
+        PreparedStatement pstmt = null;//创建pred执行对象
+        String sql = "insert into students values(?,?,?,?)";//sql语句
+        pstmt = conn.prepareStatement(sql);//为pred对象赋值
+        pstmt.setInt (1, stu.id);//注入pred对象的第一个参数
+        pstmt.setString (2, stu.name);//注入pred对象的第二个参数
+        pstmt.setString (3, stu.password);//注入pred对象的第三个参数
+        pstmt.setString (4, stu.className);//注入pred对象的第四个参数
+
+        int rs = pstmt.executeUpdate();//执行sql语句,返回sql语句影响的行数
+        if(rs>0){//解析查询结果
+            return true;
+        }
+        return false;
+    }
+
+    //3.3根据id删除数据
+    public boolean deleteById(int id) throws SQLException {
+        PreparedStatement pstmt = null;//创建pred执行对象
+        String sql = "delete from students where id=?";//sql语句
+        pstmt = conn.prepareStatement(sql);//为pred对象赋值
+        pstmt.setInt (1, id);//注入pred对象的第一个参数
+
+        int rs = pstmt.executeUpdate();//执行sql语句,返回sql语句影响的行数
+        if(rs>0){//解析查询结果
+            return true;
+        }
+        return false;
+    }
+
+    //3.4修改数据库数据
+    public boolean update(Stu stu) throws SQLException {
+        PreparedStatement pstmt = null;//创建pred执行对象
+        String sql = "update students set name=?,password=?,className=? where id=?";//sql语句
+        pstmt = conn.prepareStatement(sql);//为pred对象赋值
+        pstmt.setString (1, stu.name);//注入pred对象的第一个参数
+        pstmt.setString (2, stu.password);//注入pred对象的第二个参数
+        pstmt.setString (3, stu.className);//注入pred对象的第三个参数
+        pstmt.setInt (4, stu.id);//注入pred对象的第四个参数
+
+        int rs = pstmt.executeUpdate();//执行sql语句,返回sql语句影响的行数
+        if(rs>0){//解析查询结果
+            return true;
+        }
+        return false;
+    }
+
+
+    //2查询所有数据
+    public void getAll() throws SQLException {
+        Statement sta=conn.createStatement();//创建执行对象
+        sta.execute("select * from students");//执行数据库语句
+        ResultSet rs=sta.getResultSet();//获取结果集
+        while(rs.next()){ //解析查询结果
+            String id=rs.getString("id");
+            String name=rs.getString("name");
+            System.out.println(id+" "+name);
+        }
+
+    }
+
+    //1负责连接数据库
+    public Cbase(){
+        String driver="com.mysql.cj.jdbc.Driver";
+        String url="jdbc:mysql://localhost:3306/class";
+        String user="root";
+        String password0="000000";
+        try{
+            Class.forName(driver);//注册mysql驱动
+            conn = DriverManager.getConnection(url, user, password0);//连接数据库
+
+            if(!conn.isClosed())    System.out.println("成功连接");//测试是否连接成功
+            else System.out.println("失败连接");
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+</pre>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <a href="/">返回首页</a>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出错页面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff4b5c, #9c27b0);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            animation: backgroundAnimation 5s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            animation: textGlow 1.5s infinite alternate;
+        }
+
+        p {
+            font-size: 1.5em;
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: linear-gradient(45deg, #ff4b5c, #9c27b0);
+            }
+            50% {
+                background: linear-gradient(45deg, #00c6ff, #0072ff);
+            }
+            100% {
+                background: linear-gradient(45deg, #ff4b5c, #9c27b0);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            }
+            100% {
+                text-shadow: 0 0 15px #ff0044, 0 0 25px #ff0044, 0 0 35px #ff0044;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>哎呀，发生了错误！</h1>
+    <p>如果网页出错了，就会来到这里</p>
+</div>
+</body>
+</html>
